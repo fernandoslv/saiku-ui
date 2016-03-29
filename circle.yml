@@ -1,0 +1,20 @@
+machine:
+  node:
+    version: 0.12.0
+  services:
+    - docker
+dependencies:
+  override:
+    - sudo pip install awscli
+    - docker info
+    - docker build -t claytonsilva/saiku:saiku-ui .
+test:
+  override:
+    - echo "pendente de testes"
+deployment:
+  prod:
+    branch: publicacao
+    commands:
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker push claytonsilva/xduka-ui
+      - ssh core@node02-do.gerenc.io < sshcmd.sh
